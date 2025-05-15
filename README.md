@@ -22,17 +22,17 @@ multiple foundation models (FMs) like Claude, LLaMA 2, and Amazon Titan — with
                 Use for text generation, embeddings, agents, image generation, etc.        
 
             
-            Practical Use Cases Using Various Models            
-                | Use Case                       | Model                               | Description                                                                                                                        |
-                | ------------------------------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-                | **Chatbot**                    | Claude (Anthropic) / Titan (Amazon) | Conversational agents that can handle customer service, HR queries, etc.                                                           |
-                | **Content Summarization**      | Claude / Mistral                    | Summarize lengthy legal, financial, or academic documents.                                                                         |
-                | **Text Generation**            | Meta’s LLaMA / Amazon Titan         | Create marketing copy, product descriptions, emails, or creative stories.                                                          |
-                | **Image Generation**           | Stability AI                        | Create product images, art, or marketing visuals from text prompts.                                                                |
-                | **Embedding for Search**       | Cohere Embed                        | Generate vector representations of text to power semantic search or recommendations.                                               |
-                | **RAG-Based Search**           | Titan + Amazon Kendra or OpenSearch | Combine model generation with internal documents using retrieval augmented generation.                                             |
-                | **Agents for Task Automation** | Bedrock Agents                      | Chain multiple API calls, functions, and reasoning steps to perform structured tasks (like booking, summarizing + emailing, etc.). |
-                |________________________________|_____________________________________|____________________________________________________________________________________________________________________________________|
+        Practical Use Cases Using Various Models            
+            | Use Case                       | Model                               | Description                                                                                                                        |
+            | ------------------------------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+            | **Chatbot**                    | Claude (Anthropic) / Titan (Amazon) | Conversational agents that can handle customer service, HR queries, etc.                                                           |
+            | **Content Summarization**      | Claude / Mistral                    | Summarize lengthy legal, financial, or academic documents.                                                                         |
+            | **Text Generation**            | Meta’s LLaMA / Amazon Titan         | Create marketing copy, product descriptions, emails, or creative stories.                                                          |
+            | **Image Generation**           | Stability AI                        | Create product images, art, or marketing visuals from text prompts.                                                                |
+            | **Embedding for Search**       | Cohere Embed                        | Generate vector representations of text to power semantic search or recommendations.                                               |
+            | **RAG-Based Search**           | Titan + Amazon Kendra or OpenSearch | Combine model generation with internal documents using retrieval augmented generation.                                             |
+            | **Agents for Task Automation** | Bedrock Agents                      | Chain multiple API calls, functions, and reasoning steps to perform structured tasks (like booking, summarizing + emailing, etc.). |
+            |________________________________|_____________________________________|____________________________________________________________________________________________________________________________________|
 
 
         Q) Why it matters
@@ -77,9 +77,71 @@ Libraries Required
         Configure AWS CLI.
     
     Q) How to code with it
-            Step 1: Set up AWS SDK
+            Step 1: Set up AWS SDK : Helps to connect to amazon services
 
                 pip install boto3
+
+
+## AWS SetUp
+    1) Create a IAM User with administrative access 
+        For the user create a CLI access key
+        
+        Verify the details with: 
+            aws configure list
+
+    Model Selected LLama3-3-70b-instruct -v1:0
+    
+
+    API Request
+    {
+         "modelId": "meta.llama3-3-70b-instruct-v1:0",
+         "contentType": "application/json",
+         "accept": "application/json",
+         "body": "{\"prompt\":\"this is where you place your input text\",\"max_gen_len\":512,\"temperature\":0.5,\"top_p\":0.9}"
+    }
+    
+
+    **TestingAPI:**
+
+    import boto3
+    import json
+    
+    bedrock_runtime = boto3.client(
+        service_name='bedrock-runtime',
+        region_name='us-east-2'  # Replace with your AWS region
+    )
+    
+    model_id = 'meta.llama3-3-70b-instruct-v1:0' # Replace with the desired model
+    prompt = "Act as a Shakespeare and write a poem on Generative AI"
+    body = json.dumps({
+        "prompt": prompt,
+        "max_gen_len": 512,
+        "temperature": 0.5,
+        "top_p": 0.9
+        # "parameters": {
+        #   "temperature": 0.7,
+        #   "top_p": 0.9,
+        #   "max_gen_len": 256
+        # }
+    })
+    
+    print(body)
+    response = bedrock_runtime.invoke_model(
+        body=body,
+        modelId=model_id,
+        contentType='application/json',
+        accept='application/json'
+    )
+    
+    response_body = json.loads(response.get('body').read())
+    print(response_body)
+    
+    Resault:
+        ![img.png](img.png)
+
+## Note : The API Request will change according to the model you have selected Please verify the API request in documentation 
+    https://us-east-2.console.aws.amazon.com/bedrock/home?region=us-east-2#/model-catalog/serverless/meta.llama3-3-70b-instruct-v1:0
+
 
 
 
