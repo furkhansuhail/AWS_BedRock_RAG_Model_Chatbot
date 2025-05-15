@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/PDF_RAG_Model_AWS_Chatbot.iml" filepath="$PROJECT_DIR$/.idea/PDF_RAG_Model_AWS_Chatbot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Bedrock_PDF_RAG_Model_AWS_Chatbot.iml" filepath="$PROJECT_DIR$/.idea/Bedrock_PDF_RAG_Model_AWS_Chatbot.iml" />
     </modules>
   </component>
 </project>
