@@ -32,4 +32,4 @@ response = bedrock_runtime.invoke_model(
 # print(response_body)
 response_body=json.loads(response.get("body").read())
 repsonse_text = response_body['generation']
-print(repsonse_te
+print(repsonse_text)

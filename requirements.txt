@@ -2,3 +2,8 @@ boto3
 awscli
 transformers
 torch
+streamlit
+langchain_community
+langchain
+faiss-cpu
+pypdf
