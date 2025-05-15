@@ -1,7 +1,7 @@
 # PDF_RAG_Model_AWS_Chatbot
 
 
-## In this particular video, we are going to discuss an end-to-end LLM project using AWS Bedrock and LangChain. 
+## In this particular video, we are going to learn an end-to-end LLM project using AWS Bedrock and LangChain. 
 
 ## Project Overview
 This project implements a Document Q&A Chatbot that enables users to ask questions about PDF documents using 
