@@ -137,28 +137,135 @@ Libraries Required
     print(response_body)
     
     Resault:
-        ![img.png](img.png)
+        ![LLAma_API_Output.png](LLAma_API_Output.png)
+        
+    Note : The API Request will change according to the model you have selected Please verify the API request in documentation along **with region 
+    https://us-east-2.console.aws.amazon.com/bedrock/home?region=us-east-2#/model-catalog/serverless/meta.llama3-3-70b-instruct-v1:0**
+    
+    
+    For claude the API Request is 
+    
+    {
+      "modelId": "anthropic.claude-3-5-haiku-20241022-v1:0",
+      "contentType": "application/json",
+      "accept": "application/json",
+      "body": {
+        "anthropic_version": "bedrock-2023-05-31",
+        "max_tokens": 200,
+        "top_k": 250,
+        "stopSequences": [],
+        "temperature": 1,
+        "top_p": 0.999,
+        "messages": [
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": "hello world"
+              }
+            ]
+          }
+        ]
+      }
+    }
 
-## Note : The API Request will change according to the model you have selected Please verify the API request in documentation 
-    https://us-east-2.console.aws.amazon.com/bedrock/home?region=us-east-2#/model-catalog/serverless/meta.llama3-3-70b-instruct-v1:0
+    API: 
+    import boto3
+    import json
+    
+    # Claude 3.5 Haiku model ID (use this exact string)
+    Please get your model Id from Amazon>Bedrock>Cross-region inference>Slect your model >Inference profile ARN
+    model_id = ""
+    
+    # Define your prompt
+    prompt_text = "Can you write a python code to make a dataframe"
+    
+    # Claude message format (JSON body)
+    payload = {
+        "anthropic_version": "bedrock-2023-05-31",
+        "max_tokens": 200,
+        "top_k": 250,
+        "stop_sequences": [],
+        "temperature": 1,
+        "top_p": 0.999,
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": prompt_text
+                    }
+                ]
+            }
+        ]
+    }
+    
+    # Initialize the Bedrock Runtime client
+    bedrock = boto3.client(service_name="bedrock-runtime", region_name="us-east-2")  # Adjust region if needed
+    
+    # Invoke the model
+    response = bedrock.invoke_model(
+        modelId=model_id,
+        body=json.dumps(payload),
+        contentType="application/json",
+        accept="application/json"
+    )
+    
+    # Parse and print the response
+    response_body = json.loads(response['body'].read())
+    response_text = response_body['content'][0]['text']
+    print(response_text)
 
 
+        
+
+    We will build a RAG (Retrieval-Augmented Generation) based system:
+
+        Multiple PDFs are embedded and stored in a Vector Store.
+        
+        Queries are answered by LLMs (via AWS Bedrock) using context fetched from those PDFs.
+        
+        Users can choose different LLMs: Claude, LLaMA 2, Titan.
+    
+    🔹 Demo Highlights
+    
+        User can enter a question like: "What are Transformers?"
+        
+        Output can be generated using Claude or LLaMA 2 API.
+        
+        Model retrieves context from PDFs and returns responses.
 
 
 ## Project Architecture
-    1. Data Ingestion
-        - Read all PDFs from a folder.
-        - Split documents into chunks.
-        - Create embeddings using Amazon Titan.
-        - Store embeddings in a vector database like FAISS.
+     Step 1: Data Injection
+
+        Load PDFs from a folder.
+        
+        Split documents using RecursiveCharacterTextSplitter.
+        
+        Store chunks for embedding.
+            
+     Step 2: Create Vector Store
+            
+        Use Amazon Titan Embedding Model (or OpenAI, Google GenAI if desired).
+        
+        Embed document chunks.
+        
+        Store in FAISS (or ChromaDB).
+            
+     Step 3: Ask a Question
+            
+        Perform similarity search on vector store.
+        
+        Fetch matching chunks.
+        
+        Pass to LLM with prompt: "Summarize in 250 words..."
+        
+        Return final answer.
     
-    2. Embedding & Vector Store
-        - Use LangChain to interact with AWS Bedrock for embedding generation.
-        - Supported models: Amazon Titan, OpenAI, Google Generative AI.
-    3. Querying
-        - Perform similarity search from vector store.
-        - Send chunks + query to LLM with a prompt template.
-        - Return detailed answers to user.
+
 
 
             User Uploads PDF
