@@ -137,9 +137,8 @@ Libraries Required
     response_body = json.loads(response.get('body').read())
     print(response_body)
     
-    Resault:
-    
-LLAma_API_Output](https://github.com/user-attachments/assets/13072fb5-4469-4705-8baf-7cb78b90bb23
+    Resault Image :
+    ![LLAma_API_Output](https://github.com/user-attachments/assets/13072fb5-4469-4705-8baf-7cb78b90bb23)
 
 
     
