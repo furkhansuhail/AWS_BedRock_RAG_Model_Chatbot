@@ -94,7 +94,7 @@ Libraries Required
 
     API Request
     {
-         "modelId": "meta.llama3-3-70b-instruct-v1:0",
+         "modelId": Model_Id,
          "contentType": "application/json",
          "accept": "application/json",
          "body": "{\"prompt\":\"this is where you place your input text\",\"max_gen_len\":512,\"temperature\":0.5,\"top_p\":0.9}"
@@ -111,7 +111,7 @@ Libraries Required
         region_name='us-east-2'  # Replace with your AWS region
     )
     
-    model_id = 'meta.llama3-3-70b-instruct-v1:0' # Replace with the desired model
+    model_id = Model_Id # Replace with the desired model
     prompt = "Act as a Shakespeare and write a poem on Generative AI"
     body = json.dumps({
         "prompt": prompt,
@@ -146,7 +146,7 @@ Libraries Required
     For claude the API Request is 
     
     {
-      "modelId": "anthropic.claude-3-5-haiku-20241022-v1:0",
+      "modelId": Model_Id,
       "contentType": "application/json",
       "accept": "application/json",
       "body": {
