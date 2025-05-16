@@ -1,8 +1,11 @@
 import boto3
 import json
 
+from Model_Ids import Haiku_Id
+
 # Claude 3.5 Haiku model ID (use this exact string)
-model_id = "Enter Model Id"
+#"Enter Model Id"
+model_id = Haiku_Id
 
 # Define your prompt
 prompt_text = "Can you write a python code to make a dataframe"
