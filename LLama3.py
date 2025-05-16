@@ -1,12 +1,14 @@
 import boto3
 import json
 
+from Model_Ids import Llama_Id
+
 bedrock_runtime = boto3.client(
     service_name='bedrock-runtime',
     region_name='us-east-2'  # Replace with your AWS region
 )
 
-model_id = 'meta.llama3-3-70b-instruct-v1:0' # Replace with the desired model
+model_id = Llama_Id # Replace with the desired model
 prompt = "Act as a Shakespeare and write a poem on Generative AI"
 body = json.dumps({
     "prompt": prompt,

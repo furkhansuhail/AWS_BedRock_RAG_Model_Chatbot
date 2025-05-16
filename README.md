@@ -283,3 +283,53 @@ Libraries Required
             Send Prompt + Chunks to Bedrock Model (Claude / LLaMA 2 / Titan)
                     ↓
             Return Answer to User
+
+
+        
+## The RecursiveCharacterTextSplitter is a utility from LangChain used to split long text into smaller chunks that are suitable for LLMs (large language models) to process.
+    
+    Purpose:
+        LLMs have token limits (e.g., 4,096 tokens), so RecursiveCharacterTextSplitter helps by splitting long documents into manageable chunks, while:
+        
+        Preserving semantic meaning as much as possible
+        
+        Avoiding splits in the middle of sentences or words
+
+    How it works:
+        It splits the text using a recursive hierarchy of separators, such as:
+        
+            Double newline (\n\n)
+            
+            Single newline (\n)
+            
+            Period (.)
+            
+            Space ( )
+            
+            Empty string ("") — as a last resort
+        
+        It tries to split using the highest-level separator first, and only falls back to lower levels if needed to meet the chunk size.
+
+    RecursiveCharacterTextSplitter
+        (
+            chunk_size=1000,
+            chunk_overlap=200,
+            separators=["\n\n", "\n", ".", " ", ""]
+        )
+    
+    testingScript:
+
+    from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+    text = "This is a very long document. It has multiple sentences.\nAnd it spans multiple lines.\n\nSome parts are paragraphs."
+    
+    splitter = RecursiveCharacterTextSplitter(chunk_size=50, chunk_overlap=10)
+    chunks = splitter.split_text(text)
+    
+    for i, chunk in enumerate(chunks):
+        print(f"Chunk {i+1}:\n{chunk}\n")
+
+    When to Utilize 
+        Before sending documents to a vector database
+        For RAG (Retrieval-Augmented Generation) applications
+        To ensure inputs stay within token limits

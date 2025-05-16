@@ -7,3 +7,5 @@ langchain_community
 langchain
 faiss-cpu
 pypdf
+langchain-aws
+pathlib
