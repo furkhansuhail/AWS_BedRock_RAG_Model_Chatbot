@@ -90,8 +90,8 @@ Libraries Required
             aws configure list
 
     Model Selected LLama3-3-70b-instruct -v1:0
-    
 
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------------
     API Request
     {
          "modelId": Model_Id,
@@ -100,6 +100,7 @@ Libraries Required
          "body": "{\"prompt\":\"this is where you place your input text\",\"max_gen_len\":512,\"temperature\":0.5,\"top_p\":0.9}"
     }
     
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     **TestingAPI:**
 
@@ -128,7 +129,7 @@ Libraries Required
     print(body)
     response = bedrock_runtime.invoke_model(
         body=body,
-        modelId=model_id,
+        modelId=Model_Id,
         contentType='application/json',
         accept='application/json'
     )
@@ -137,13 +138,16 @@ Libraries Required
     print(response_body)
     
     Resault:
-        ![LLAma_API_Output.png](LLAma_API_Output.png)
-        
+        ![LLAma_API_Output](https://github.com/user-attachments/assets/13072fb5-4469-4705-8baf-7cb78b90bb23)
+
+
+    
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------------
     Note : The API Request will change according to the model you have selected Please verify the API request in documentation along **with region 
     https://us-east-2.console.aws.amazon.com/bedrock/home?region=us-east-2#/model-catalog/serverless/meta.llama3-3-70b-instruct-v1:0**
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
-    
-    For claude the API Request is 
+    For Claude Haiku API Request is 
     
     {
       "modelId": Model_Id,
@@ -170,13 +174,14 @@ Libraries Required
       }
     }
 
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------------
     API: 
     import boto3
     import json
     
     # Claude 3.5 Haiku model ID (use this exact string)
     Please get your model Id from Amazon>Bedrock>Cross-region inference>Slect your model >Inference profile ARN
-    model_id = ""
+    model_id = "Model_Id"
     
     # Define your prompt
     prompt_text = "Can you write a python code to make a dataframe"
@@ -207,7 +212,7 @@ Libraries Required
     
     # Invoke the model
     response = bedrock.invoke_model(
-        modelId=model_id,
+        modelId=Model_Id,
         body=json.dumps(payload),
         contentType="application/json",
         accept="application/json"
@@ -218,8 +223,7 @@ Libraries Required
     response_text = response_body['content'][0]['text']
     print(response_text)
 
-
-        
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     We will build a RAG (Retrieval-Augmented Generation) based system:
 
