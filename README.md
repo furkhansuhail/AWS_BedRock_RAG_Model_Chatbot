@@ -138,7 +138,8 @@ Libraries Required
     print(response_body)
     
     Resault:
-        ![LLAma_API_Output](https://github.com/user-attachments/assets/13072fb5-4469-4705-8baf-7cb78b90bb23)
+    
+LLAma_API_Output](https://github.com/user-attachments/assets/13072fb5-4469-4705-8baf-7cb78b90bb23
 
 
     
